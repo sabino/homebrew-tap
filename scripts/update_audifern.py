@@ -61,7 +61,7 @@ def render(version: str, digest: str) -> str:
     strategy :github_latest
   end
 
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "Audifern.app"
 end

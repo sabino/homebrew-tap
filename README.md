@@ -38,6 +38,11 @@ brew tap sabino/tap
 brew install --cask audifern
 ```
 
+Malt 0.25.2 requires the qualified name for an initial custom-cask install.
+Both `mt install --cask sabino/audifern` and `mt install --cask audifern` report
+`CaskNotFound`, even after `mt tap sabino/tap`. The full three-part command above
+has been tested with a real installation.
+
 ## Upgrade or uninstall
 
 Quit Audifern before upgrading its installed application bundle.

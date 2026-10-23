@@ -34,6 +34,16 @@ class ReleasePolicyTests(unittest.TestCase):
         self.assertEqual(version, "0.8.1")
         self.assertEqual(len(assets), 4)
 
+    def test_optional_update_feed_must_have_the_same_versioned_url_and_digest(self):
+        data = release()
+        asset = {'name': 'appcast.xml', 'digest': 'sha256:' + 'a' * 64, 'state': 'uploaded', 'size': 10,
+                 'browser_download_url': 'https://github.com/sabino/audifern/releases/download/v0.8.1/appcast.xml'}
+        data['assets'].append(asset)
+        self.assertEqual(len(validate_release(data)[1]), 5)
+        for change in [{'digest': ''}, {'browser_download_url': 'https://example.com/appcast.xml'}, {'state': 'uploading'}]:
+            invalid = deepcopy(data); invalid['assets'][-1].update(change)
+            with self.subTest(change=change), self.assertRaises(ValueError): validate_release(invalid)
+
     def test_rejects_unpublished_prerelease_or_invalid_versions(self):
         for change in ({"draft": True}, {"prerelease": True}, {"tag_name": "v0.8.1-beta"},
                        {"tag_name": "v01.2.3"}, {"tag_name": "v0.8.1\n"}, {"draft": 0}):

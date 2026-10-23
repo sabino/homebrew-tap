@@ -91,8 +91,10 @@ def validate_release(release: dict) -> tuple[str, dict]:
     names = {prefix + ".dmg", prefix + ".zip", "build-info.json", "SHA256SUMS"}
     assets = release.get("assets", [])
     by_name = {asset["name"]: asset for asset in assets}
+    if 'appcast.xml' in by_name:
+        names.add('appcast.xml')
     if len(assets) != len(names) or set(by_name) != names:
-        raise ValueError("Expected exactly the four official release assets.")
+        raise ValueError("Expected only the official release assets and optional signed update feed.")
     for name, asset in by_name.items():
         if asset.get("browser_download_url") != f"https://github.com/{UPSTREAM}/releases/download/{tag}/{name}":
             raise ValueError("A release asset points outside the expected versioned URL.")

@@ -1,6 +1,6 @@
 cask "audifern" do
-  version "0.8.4"
-  sha256 "b23a6d309c85805e27b87dce44308105b0253a92e87b6f0794f38b114c4b7dee"
+  version "0.9.0"
+  sha256 "9b9ddd12c06e9e03a56c9bbee96010e1a8c23a4d295de60ec80b93ccdd45e366"
 
   url "https://github.com/sabino/audifern/releases/download/v#{version}/Audifern-#{version}-macos-universal.dmg"
   name "Audifern"
